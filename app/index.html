@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Pulse</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main>
+    <div class="dashboard">
+      <header class="dashboard__header" role="banner">
+        <h1>Project Pulse</h1>
+        <p>What Mona's team is shipping this week.</p>
+      </header>
+
+      <section class="dashboard__grid" aria-label="Project cards"></section>
+    </div>
+  </main>
+
+  <script>
+    const statusModifiers = {
+      'On Track': { modifier: 'on-track', glyph: '●' },
+      'At Risk': { modifier: 'at-risk', glyph: '▲' },
+      'Blocked': { modifier: 'blocked', glyph: '■' },
+      'Shipped': { modifier: 'shipped', glyph: '✓' }
+    };
+
+    const priorityModifiers = {
+      High: 'high',
+      Medium: 'medium',
+      Low: 'low'
+    };
+
+    function appendTextElement(parent, tagName, className, text) {
+      const element = document.createElement(tagName);
+      element.className = className;
+      element.textContent = text;
+      parent.appendChild(element);
+      return element;
+    }
+
+    function createStatusBadge(status) {
+      const statusMeta = statusModifiers[status] || { modifier: 'blocked', glyph: '■' };
+      const badge = document.createElement('span');
+      badge.className = `status-badge status-badge--${statusMeta.modifier}`;
+
+      const glyph = document.createElement('span');
+      glyph.setAttribute('aria-hidden', 'true');
+      glyph.textContent = statusMeta.glyph;
+      badge.appendChild(glyph);
+
+      const label = document.createTextNode(` ${status}`);
+      badge.appendChild(label);
+
+      return badge;
+    }
+
+    function createProjectCard(project, index) {
+      const prioritySlug = priorityModifiers[project.priority] || 'medium';
+      const card = document.createElement('article');
+      card.className = `project-card priority--${prioritySlug}`;
+      card.tabIndex = 0;
+      card.setAttribute('role', 'group');
+      card.setAttribute('aria-labelledby', `proj-${index}-name`);
+
+      const stripe = document.createElement('div');
+      stripe.className = 'project-card__stripe';
+      stripe.setAttribute('aria-hidden', 'true');
+      card.appendChild(stripe);
+
+      const header = document.createElement('div');
+      header.className = 'project-card__topline';
+
+      const name = appendTextElement(header, 'h3', 'project-card__name', project.name);
+      name.id = `proj-${index}-name`;
+      header.appendChild(createStatusBadge(project.status));
+      card.appendChild(header);
+
+      const owner = document.createElement('p');
+      owner.className = 'project-card__owner';
+      const ownerLabel = document.createElement('span');
+      ownerLabel.textContent = 'Owner';
+      owner.appendChild(ownerLabel);
+      owner.appendChild(document.createTextNode(project.owner));
+      card.appendChild(owner);
+
+      appendTextElement(card, 'p', 'project-card__activity', project.recentActivity);
+
+      const footer = document.createElement('footer');
+      footer.className = 'project-card__footer';
+      appendTextElement(footer, 'span', `priority priority--${prioritySlug}`, `Priority: ${project.priority}`);
+      card.appendChild(footer);
+
+      return card;
+    }
+
+    function renderError(grid) {
+      const message = document.createElement('p');
+      message.className = 'dashboard__message';
+      message.textContent = 'Project data could not be loaded. Please refresh the dashboard.';
+      grid.replaceChildren(message);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const grid = document.querySelector('.dashboard__grid');
+
+      fetch('project-data.json')
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('Project data request failed');
+          }
+
+          return response.json();
+        })
+        .then((data) => {
+          const projects = Array.isArray(data.projects) ? data.projects : [];
+          const cards = projects.map((project, index) => createProjectCard(project, index));
+          grid.replaceChildren(...cards);
+        })
+        .catch(() => renderError(grid));
+    });
+  </script>
+</body>
+</html>

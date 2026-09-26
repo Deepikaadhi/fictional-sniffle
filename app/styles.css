@@ -1,0 +1,259 @@
+:root {
+  --bg: #F8FAFC;
+  --surface: #FFFFFF;
+  --border: #E2E8F0;
+  --text: #0F172A;
+  --text-muted: #64748B;
+  --accent: #4F46E5;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+main {
+  padding: 32px 24px 48px;
+}
+
+.dashboard {
+  width: min(100%, 1200px);
+  margin: 0 auto;
+}
+
+.dashboard__header {
+  margin-bottom: 32px;
+}
+
+.dashboard__header h1 {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.dashboard__header p {
+  margin: 8px 0 0;
+  color: var(--text-muted);
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.dashboard__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+  align-items: stretch;
+}
+
+.dashboard__message {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.project-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  gap: 12px;
+  padding: 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 4px 12px rgba(15, 23, 42, 0.06);
+  transition: transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease;
+}
+
+.project-card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .project-card:hover,
+  .project-card:focus-within {
+    transform: translateY(-2px);
+  }
+}
+
+.project-card:hover,
+.project-card:focus-within {
+  border-color: color-mix(in srgb, var(--accent) 48%, var(--border));
+  box-shadow: 0 6px 20px rgba(15, 23, 42, 0.10);
+}
+
+.project-card__stripe {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 4px;
+  background: currentColor;
+}
+
+.project-card__topline {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 4px;
+}
+
+.project-card__name {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.project-card__owner {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.project-card__owner span {
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
+
+.project-card__activity {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.project-card__footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: auto;
+}
+
+.status-badge {
+  flex: 0 0 auto;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  line-height: 1.25;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.status-badge--on-track {
+  background: #DCFCE7;
+  border-color: #BBF7D0;
+  color: #14532D;
+}
+
+.status-badge--at-risk {
+  background: #FEF3C7;
+  border-color: #FDE68A;
+  color: #78350F;
+}
+
+.status-badge--blocked {
+  background: #FEE2E2;
+  border-color: #FECACA;
+  color: #7F1D1D;
+}
+
+.status-badge--shipped {
+  background: #DBEAFE;
+  border-color: #BFDBFE;
+  color: #1E3A8A;
+}
+
+.priority {
+  border-radius: 4px;
+  padding: 3px 8px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+
+.priority--high {
+  color: #7F1D1D;
+}
+
+.project-card.priority--high .project-card__stripe {
+  background: #DC2626;
+}
+
+.priority.priority--high {
+  background: #FEE2E2;
+}
+
+.priority--medium {
+  color: #78350F;
+}
+
+.project-card.priority--medium .project-card__stripe {
+  background: #D97706;
+}
+
+.priority.priority--medium {
+  background: #FEF3C7;
+}
+
+.priority--low {
+  color: #0C4A6E;
+}
+
+.project-card.priority--low .project-card__stripe {
+  background: #0369A1;
+}
+
+.priority.priority--low {
+  background: #E0F2FE;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 480px) {
+  main {
+    padding: 16px 16px 48px;
+  }
+
+  .dashboard__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .project-card {
+    padding: 16px;
+  }
+
+  .project-card__topline {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

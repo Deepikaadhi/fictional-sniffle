@@ -1,0 +1,46 @@
+{
+  "projects": [
+    {
+      "name": "Contributor Onboarding Revamp",
+      "owner": "Mona Ellison",
+      "status": "On Track",
+      "recentActivity": "PR #482 merged 2 hours ago",
+      "priority": "High"
+    },
+    {
+      "name": "Docs Search Relevance",
+      "owner": "Priya Raman",
+      "status": "At Risk",
+      "recentActivity": "Blocked review on issue #217, updated yesterday",
+      "priority": "High"
+    },
+    {
+      "name": "Nightly Build Pipeline",
+      "owner": "Diego Alvarez",
+      "status": "Blocked",
+      "recentActivity": "Waiting on infra ticket INF-903, 3 days idle",
+      "priority": "Medium"
+    },
+    {
+      "name": "Copilot CLI Recipes",
+      "owner": "Sasha Wu",
+      "status": "On Track",
+      "recentActivity": "Draft PR #501 opened this morning",
+      "priority": "Medium"
+    },
+    {
+      "name": "Accessibility Audit Q3",
+      "owner": "Rowan Fitzgerald",
+      "status": "Shipped",
+      "recentActivity": "Report published Monday",
+      "priority": "Low"
+    },
+    {
+      "name": "Community Forum Migration",
+      "owner": "Yuki Tanaka",
+      "status": "At Risk",
+      "recentActivity": "Timeline slipped 1 week, sync scheduled Thursday",
+      "priority": "Low"
+    }
+  ]
+}
